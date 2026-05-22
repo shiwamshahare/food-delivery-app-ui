@@ -22,7 +22,7 @@ A complete **React Native** food delivery application built with **Expo** and **
 
 ## 🎥 Demo Video
 
-**[📹 Watch 2-Minute Demo Video](#)** *(Add your video link here)*
+**[📹 Watch 2-Minute Demo Video](https://www.linkedin.com/posts/shiwamshahare_reactnative-exporouter-mobiledevelopment-ugcPost-7463627079492040705-uAhq?utm_source=social_share_send&utm_medium=member_desktop_web&rcm=ACoAAC_BSDgBlApMbk2gZwOUVFgulTpznuFexNU)** 
 
 **Demo covers:**
 - ✅ Login/Auth flow with persistence
@@ -219,7 +219,7 @@ bun run start --clear
 
 ### **Demo Credentials**
 ```
-Email: com@shahare.com
+Email: com.shahare@gmail.com
 Password: password
 ```
 
@@ -250,7 +250,27 @@ xcrun simctl openurl booted "foodapp://restaurant/1"
 - `foodapp://restaurant/6` → Thali Junction
 
 ---
- 
+
+## 📸 Screenshots
+<img width="270" height="600" alt="WhatsApp Image 2026-05-23 at 12 04 38 AM" src="https://github.com/user-attachments/assets/04b5c7dc-100e-48a0-8a2f-1ea2f1764746" />
+
+<img width="270" height="600" alt="WhatsApp Image 2026-05-23 at 12 04 37 AM" src="https://github.com/user-attachments/assets/b0807593-22e2-4a9e-89ff-f9c8105c2584" />
+
+<img width="270" height="600" alt="WhatsApp Image 2026-05-23 at 12 04 35 AM" src="https://github.com/user-attachments/assets/b4e37199-e45b-457e-af95-de7cf7e2b5db" />
+
+<img width="270" height="600" alt="WhatsApp Image 2026-05-23 at 12 04 30 AM" src="https://github.com/user-attachments/assets/9581b2a7-27f6-4601-8b3c-193e9e90793e" />
+
+<img width="270" height="600" alt="WhatsApp Image 2026-05-23 at 12 04 26 AM" src="https://github.com/user-attachments/assets/a7318ddf-8c47-4d7a-ac5a-3f22d39b3042" />
+
+<img width="270" height="600" alt="WhatsApp Image 2026-05-23 at 12 04 24 AM" src="https://github.com/user-attachments/assets/670fcb4f-61b5-45c8-815d-21f790a63b04" />
+
+<img width="270" height="600" alt="WhatsApp Image 2026-05-23 at 12 04 23 AM" src="https://github.com/user-attachments/assets/1259b1e4-eeba-4028-88c2-cf2744e0479e" />
+
+<img width="270" height="600" alt="WhatsApp Image 2026-05-23 at 12 29 17 AM" src="https://github.com/user-attachments/assets/c03162aa-f733-4e44-bbc8-671859e104a9" />
+
+<img width="270" height="600" alt="WhatsApp Image 2026-05-23 at 12 29 16 AM" src="https://github.com/user-attachments/assets/3ebf2039-0c34-4c74-9df7-852192cd8e0d" />
+
+
 ## 📄 License
 
 This project is created for educational purposes as part of a React Native navigation assignment.
