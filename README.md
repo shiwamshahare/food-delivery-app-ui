@@ -1,22 +1,24 @@
 # 🍛 Delulu Food - Food Delivery App
 
-A complete **React Native** food delivery application built with **Expo** and **Expo Router**, demonstrating all major navigation patterns including Stack, Tab, Drawer navigation, authentication flow, deep linking, and state persistence.
+A complete **React Native** food delivery application built with **Expo SDK 55** and **React Navigation v7**, demonstrating all major navigation patterns including Stack, Bottom Tabs, Drawer navigation, authentication flow, deep linking, and state persistence.
+
+> **Note:** This project uses **React Navigation** directly (not Expo Router) for full control over navigation architecture.
 
 ---
 
 ## 📱 Project Overview
 
 **Delulu Food** is a full-featured food delivery app UI showcasing comprehensive React Navigation implementation with:
-- ✅ Nested navigation (Stack inside Tabs)
-- ✅ Conditional authentication flow
+- ✅ Nested navigation (Stack inside Tabs inside Drawer)
+- ✅ Conditional authentication flow (Login stack vs Main app)
 - ✅ Persistent auth state with AsyncStorage
-- ✅ Deep linking support
+- ✅ Deep linking support (`foodapp://restaurant/:id`)
 - ✅ Custom headers and transitions
-- ✅ Programmatic navigation (navigate, goBack, replace, reset)
-- ✅ Dynamic tab bar visibility
-- ✅ Drawer navigation with custom content
+- ✅ Programmatic navigation (`navigate`, `goBack`, `replace`, `reset`)
+- ✅ Dynamic tab bar visibility (hides on Restaurant Detail & Cart)
+- ✅ Real Drawer navigation with custom content (avatar, user name, logout)
 - ✅ Route parameters passing
-- ✅ Cart badge on tabs
+- ✅ Cart badge on Orders tab
 
 ---
 
@@ -39,7 +41,7 @@ A complete **React Native** food delivery application built with **Expo** and **
 
 ## 🔗 Links
 
-- **GitHub Repository:** [[Repo](https://github.com/shiwamshahare/food-delivery-app-ui)](#)
+- **GitHub Repository:** [Repo](https://github.com/shiwamshahare/food-delivery-app-ui)
 
 ---
 
@@ -49,12 +51,14 @@ A complete **React Native** food delivery application built with **Expo** and **
 |------------|---------|
 | **React Native** | Mobile app framework |
 | **Expo SDK 55** | Development platform |
-| **Expo Router v4** | File-based routing |
+| **React Navigation v7** | Navigation library (Native Stack, Bottom Tabs, Drawer) |
+| **@react-navigation/native-stack** | Stack navigation for auth/home flows |
+| **@react-navigation/bottom-tabs** | Bottom tab navigation |
+| **@react-navigation/drawer** | Drawer navigation with custom content |
 | **TypeScript** | Type safety |
-| **AsyncStorage** | State persistence |
-| **Lucide React Native** | Vector icons |
+| **AsyncStorage** | Auth state persistence |
+| **@expo/vector-icons** | Ionicons icon set |
 | **Expo Google Fonts** | Poppins font family |
-| **React Navigation** | Navigation library (via Expo Router) |
 
 ---
 
@@ -62,53 +66,47 @@ A complete **React Native** food delivery application built with **Expo** and **
 
 ```
 food-delivery-app-ui/
+├── App.tsx                              # Root: NavigationContainer + deep linking
 ├── src/
-│   ├── app/                          # Expo Router file-based routing
-│   │   ├── _layout.tsx               # Root Stack + NavigationGuard
-│   │   ├── index.tsx                 # Redirect to home
-│   │   ├── drawer.tsx                # Drawer Navigator (Modal)
-│   │   │
-│   │   ├── onboarding/               # Onboarding Stack
-│   │   │   ├── _layout.tsx
-│   │   │   └── index.tsx             # 3-slide carousel
-│   │   │
-│   │   ├── (auth)/                   # Auth Stack
-│   │   │   ├── _layout.tsx
-│   │   │   └── login.tsx             # Login screen
-│   │   │
-│   │   ├── (tabs)/                   # Bottom Tab Navigator
-│   │   │   ├── _layout.tsx           # Tab configuration
-│   │   │   ├── home/                 # Home Stack (nested)
-│   │   │   │   ├── _layout.tsx       # Custom header config
-│   │   │   │   ├── index.tsx         # Home feed
-│   │   │   │   ├── restaurant.tsx    # Restaurant detail
-│   │   │   │   └── cart.tsx          # Cart/checkout
-│   │   │   ├── search.tsx
-│   │   │   ├── orders.tsx
-│   │   │   └── profile.tsx
-│   │   │
-│   │   └── restaurant/               # Deep link handler
-│   │       └── [id].tsx              # Dynamic route
+│   ├── navigation/                      # All navigator definitions
+│   │   ├── types.ts                     # TypeScript param list types
+│   │   ├── RootNavigator.tsx            # Auth-conditional root (Onboarding/Auth/Main)
+│   │   ├── AuthStack.tsx                # Login stack (unauthenticated)
+│   │   ├── DrawerNavigator.tsx          # Drawer with custom content
+│   │   ├── TabNavigator.tsx             # Bottom tabs (Home, Search, Orders, Profile)
+│   │   └── HomeStack.tsx                # Nested stack (Home → Restaurant → Cart)
+│   │
+│   ├── screens/                         # All screen components
+│   │   ├── OnboardingScreen.tsx         # 3-slide carousel
+│   │   ├── LoginScreen.tsx              # Email/password login
+│   │   ├── HomeScreen.tsx               # Restaurant feed
+│   │   ├── RestaurantDetailScreen.tsx   # Menu + add to cart
+│   │   ├── CartScreen.tsx               # Checkout flow
+│   │   ├── SearchScreen.tsx             # Search restaurants
+│   │   ├── OrdersScreen.tsx             # Order history
+│   │   ├── ProfileScreen.tsx            # User profile
+│   │   ├── SettingsScreen.tsx           # App settings
+│   │   └── HelpScreen.tsx              # Help & support
 │   │
 │   ├── store/
-│   │   ├── authStore.ts              # Auth state + AsyncStorage
-│   │   └── cartStore.ts              # Cart state (pub/sub)
+│   │   ├── authStore.ts                 # Auth state + AsyncStorage persistence
+│   │   └── cartStore.ts                 # Cart state (pub/sub pattern)
 │   │
 │   ├── hooks/
-│   │   ├── useTheme.ts               # Dark/light mode
-│   │   └── useFonts.ts               # Poppins font loading
+│   │   ├── useTheme.ts                  # Dark/light mode
+│   │   └── useFonts.ts                  # Poppins font loading
 │   │
 │   ├── theme/
-│   │   ├── colors.ts                 # Color tokens
-│   │   └── fonts.ts                  # Font configuration
+│   │   ├── colors.ts                    # Color tokens (light + dark)
+│   │   └── fonts.ts                     # Font configuration
 │   │
 │   ├── data/
-│   │   └── restaurants.ts            # Mock data
+│   │   └── restaurants.ts               # Mock restaurant data
 │   │
 │   └── components/
-│       └── Text.tsx                  # Custom Text component
+│       └── Text.tsx                     # Custom Text component with Poppins
 │
-├── app.json                          # Expo config + deep link scheme
+├── app.json                             # Expo config + deep link scheme
 ├── package.json
 └── README.md
 ```
@@ -120,29 +118,33 @@ food-delivery-app-ui/
 ### **Visual Diagram**
 
 ```
-Root Stack (_layout.tsx)
+NavigationContainer (deep linking: foodapp://)
 │
-├── onboarding/          ← Stack (first launch)
-│   └── index            ← 3 slides + "Get Started"
-│
-├── (auth)/              ← Stack (unauthenticated)
-│   └── login            ← Email/password
-│
-├── (tabs)/              ← Bottom Tab Navigator ──────────────────
-│   ├── home/            ← Stack (nested inside Home tab)
-│   │   ├── index        ← Home feed (tab bar visible)
-│   │   ├── restaurant   ← Detail (tab bar HIDDEN, custom header)
-│   │   └── cart         ← Checkout (tab bar HIDDEN)
-│   │
-│   ├── search           ← Search screen
-│   ├── orders           ← Order history (badge shows cart count)
-│   └── profile          ← Profile + drawer access
-│
-├── drawer               ← Transparent Modal (slides from left)
-│   └── Custom content: avatar, nav items, logout
-│
-└── restaurant/[id]      ← Deep link handler
-    └── Redirects to (tabs)/home/restaurant with params
+└── RootNavigator (Native Stack — conditional rendering)
+    │
+    ├── [user=null, hasOnboarded=false]
+    │   └── OnboardingScreen         ← 3-slide carousel + "Get Started"
+    │
+    ├── [user=null, hasOnboarded=true]
+    │   └── AuthStack (Native Stack)
+    │       └── LoginScreen          ← Email/password form
+    │
+    └── [user exists]
+        └── DrawerNavigator (@react-navigation/drawer)
+            │   Custom drawer content: avatar, name, email, Gold badge, logout
+            │
+            ├── Tabs (Bottom Tab Navigator) ─────────────────────────
+            │   ├── HomeStack (Native Stack — nested inside Home tab)
+            │   │   ├── Home              ← Restaurant feed (tab bar visible)
+            │   │   ├── RestaurantDetail  ← Detail screen (tab bar HIDDEN)
+            │   │   └── Cart             ← Checkout (tab bar HIDDEN)
+            │   │
+            │   ├── Search               ← Search restaurants
+            │   ├── Orders               ← Order history (badge shows cart count)
+            │   └── Profile              ← Profile + drawer access (hamburger icon)
+            │
+            ├── Settings                 ← App settings (via drawer)
+            └── Help                     ← Help & support (via drawer)
 ```
 
 ### **Navigation Flow**
@@ -150,17 +152,29 @@ Root Stack (_layout.tsx)
 ```
 App Launch
     │
-    ├─ isLoading = true  →  Wait for AsyncStorage
+    ├─ isLoading = true  →  Splash screen (AsyncStorage hydration)
     │
-    ├─ user = null, hasOnboarded = false  →  /onboarding
-    │       └─ "Get Started"  →  completeOnboarding()  →  /(auth)/login
+    ├─ user = null, hasOnboarded = false  →  OnboardingScreen
+    │       └─ "Get Started"  →  completeOnboarding()  →  AuthStack/Login
     │
-    ├─ user = null, hasOnboarded = true  →  /(auth)/login
-    │       └─ login()  →  persist  →  /(tabs)/home
+    ├─ user = null, hasOnboarded = true  →  AuthStack/Login
+    │       └─ login()  →  persist to AsyncStorage  →  DrawerNavigator/Tabs/Home
     │
-    └─ user = { ... }  →  /(tabs)/home  (skip auth)
-            └─ logout()  →  clear storage  →  /(auth)/login
+    └─ user = { ... }  →  DrawerNavigator/Tabs/Home  (skip auth)
+            └─ logout()  →  clear storage  →  AuthStack/Login
 ```
+
+---
+
+## 🧭 Programmatic Navigation Methods Used
+
+| Method | Screen | Purpose |
+|--------|--------|---------|
+| `navigation.navigate()` | HomeScreen, SearchScreen, ProfileScreen | Navigate to RestaurantDetail, Cart, Settings, Help |
+| `navigation.goBack()` | CartScreen, SettingsScreen, HelpScreen | Back button navigation |
+| `navigation.replace()` | CartScreen | Replace Cart with Home (Browse Restaurants) |
+| `navigation.reset()` | CartScreen | After checkout, reset stack → navigate to Orders tab |
+| `navigation.openDrawer()` | HomeScreen, ProfileScreen | Open the drawer from hamburger menu |
 
 ---
 
@@ -180,13 +194,9 @@ git clone https://github.com/shiwamshahare/food-delivery-app-ui.git
 cd food-delivery-app-ui
 
 # Install dependencies
-bun install
-# or
 npm install
 
 # Start Expo dev server
-bun run start
-# or
 npm start
 ```
 
@@ -194,18 +204,18 @@ npm start
 
 ```bash
 # Android
-bun run android
+npm run android
 
 # iOS
-bun run ios
+npm run ios
 
 # Web
-bun run web
+npm run web
 ```
 
 ### **Clear Cache (if needed)**
 ```bash
-bun run start --clear
+npm start -- --clear
 ```
 
 ---
@@ -213,9 +223,9 @@ bun run start --clear
 ## 🔐 Authentication Flow
 
 ### **Implementation**
-- **Store:** `src/store/authStore.ts` (pub/sub pattern, no Context)
+- **Store:** `src/store/authStore.ts` (pub/sub pattern, no Context needed)
 - **Persistence:** AsyncStorage (`@foodapp_auth` key)
-- **Guard:** `NavigationGuard` in `src/app/_layout.tsx`
+- **Guard:** Conditional rendering in `RootNavigator.tsx` — automatically switches between AuthStack and DrawerNavigator based on `useAuth()` state
 
 ### **Demo Credentials**
 ```
@@ -226,10 +236,38 @@ Password: password
 ### **Auth States**
 1. **First Launch:** Onboarding → Login
 2. **Returning (not logged in):** Login
-3. **Returning (logged in):** Home (direct)
+3. **Returning (logged in):** Home (direct — auth persisted in AsyncStorage)
 4. **After Logout:** Login
 
+---
 
+## 🔗 Deep Linking
+
+### **Configuration**
+Deep linking is configured in `App.tsx` using React Navigation's `linking` prop:
+
+```typescript
+const linking = {
+  prefixes: ['foodapp://'],
+  config: {
+    screens: {
+      Main: {
+        screens: {
+          Tabs: {
+            screens: {
+              HomeStack: {
+                screens: {
+                  RestaurantDetail: 'restaurant/:id',
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+  },
+};
+```
 
 ### **Testing Deep Links**
 
@@ -279,7 +317,7 @@ This project is created for educational purposes as part of a React Native navig
 
 ## 👨‍💻 Author
 
-**Your Name**
+**Shiwam Shahare**
 - GitHub: [@shiwamshahare](https://github.com/shiwamshahare)
 - Email: com.shahare@gmail.com
 
@@ -290,7 +328,7 @@ This project is created for educational purposes as part of a React Native navig
 - **Expo Team** — For the amazing development platform
 - **React Navigation** — For comprehensive navigation library
 - **Pexels** — Free stock images
-- **Lucide** — Beautiful icon set
+- **Ionicons** — Icon set via @expo/vector-icons
 
 ---
 
@@ -299,4 +337,4 @@ This project is created for educational purposes as part of a React Native navig
 
 ---
 
-*Last Updated: May 22, 2026*
+*Last Updated: May 27, 2026*

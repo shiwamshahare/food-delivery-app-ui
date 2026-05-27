@@ -10,7 +10,6 @@ export type ThemeMode = 'system' | 'light' | 'dark';
 let currentThemeMode: ThemeMode = 'system';
 const listeners = new Set<() => void>();
 
-// Load initial theme preference from storage
 async function loadThemePreference() {
   try {
     const saved = await AsyncStorage.getItem(THEME_STORAGE_KEY);
@@ -21,7 +20,6 @@ async function loadThemePreference() {
   } catch (_) {}
 }
 
-// Hydrate immediately on module load
 loadThemePreference();
 
 export async function setThemeMode(mode: ThemeMode) {
