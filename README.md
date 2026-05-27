@@ -22,7 +22,7 @@ A complete **React Native** food delivery application built with **Expo** and **
 
 ## 🎥 Demo Video
 
-**[📹 Watch 2-Minute Demo Video](https://www.linkedin.com/posts/shiwamshahare_reactnative-exporouter-mobiledevelopment-ugcPost-7463627079492040705-uAhq?utm_source=social_share_send&utm_medium=member_desktop_web&rcm=ACoAAC_BSDgBlApMbk2gZwOUVFgulTpznuFexNU)** 
+**[📹 Watch 2-Minute Demo Video](https://drive.google.com/file/d/1JqoVJ5Hb66QP_8R0AYHHo2ktIO1bxkYY/view?usp=drivesdk)** 
 
 **Demo covers:**
 - ✅ Login/Auth flow with persistence
